@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+request.setCharacterEncoding("UTF-8");
+<form action="search.jsp" method="POST">
+직원 이름:
+<input type="text" name="e_name">
+<br>
+
+직원 번호:
+<input type="text" name="e_no">
+
+<br><br>
+<input type="submit" value="검색"/>
+</form>
+
+</body>
+</html>

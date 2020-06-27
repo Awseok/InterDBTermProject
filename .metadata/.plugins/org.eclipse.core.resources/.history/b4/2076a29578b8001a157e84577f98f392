@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <%@ page import="java.sql.*,javax.sql.*,javax.naming.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<% 
+String e_name = request.getParameter("e_name");
+String e_no = request.getParameter("e_no");
+String query = "select * from Employee ";
+String result_query = query + "where EMPLOYEE_NAME =" + "'" + e_name + "'";
+
+Class.forName("oracle.jdbc.OracleDriver");
+Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@db.pknu.ac.kr:1521:xe", "db201512109", "201512109");
+PreparedStatement st = conn.prepareStatement(result_query);
+ResultSet rs = st.executeQuery();
+
+while (rs.next()) {
+Integer eno=rs.getInt("EMPLOYEE_NUMBER");
+String name=rs.getString("EMPLOYEE_NAME");
+String task=rs.getString("TASK");
+%>
+직원번호 : <%=eno %>
+이름: <%=name %>
+업무: <%=task %><%
+}
+
+%>
+
+
+</body>
+</html>

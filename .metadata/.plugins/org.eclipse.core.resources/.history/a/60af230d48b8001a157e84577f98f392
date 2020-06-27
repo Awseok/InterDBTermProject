@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <%@ page import="java.sql.*,javax.sql.*,javax.naming.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>학생 정보</title>
+</head>
+<body>
+
+
+<table border =1>
+<tr> <th> 학번 </th> <th> 이름 <th> 학년 <th> 학과  </tr> 
+<%
+
+Class.forName("oracle.jdbc.OracleDriver");
+Connection conn= DriverManager.getConnection("jdbc:oracle:thin:@db.pknu.ac.kr:1521:xe", "db201512109", "201512109");
+
+ 
+String snoStr = request.getParameter("sno");
+String sqlStr = "select * from student";
+
+
+	if(snoStr != null && snoStr.length() >= 1){
+		sqlStr= sqlStr + "where sno = ?";
+	}
+ 
+
+
+PreparedStatement pst = conn.prepareStatement(sqlStr);
+
+if (snoStr != null && snoStr.length() >=1){
+	pst.setInt(1,Integer.parseInt(snoStr));
+}
+
+ResultSet rs = pst.executeQuery();
+
+while (rs.next()){
+	int sno = rs.getInt("sno");
+	String sname = rs.getString("sname");
+	int year = rs.getInt("YEAR");
+	String dept = rs.getString(4);
+	
+	//System.out.format("STUDENT(%d %s %d %s) \n",sno, sname,year,dept);
+	%> <tr> <td> <%=sno %> <td> <a href ="list-courses2.jsp?sno=<%=sno%>"> <%= sname %> </a> <td> <%= year %> <td> <%= dept %> </tr> <% 
+}
+
+rs.close();
+pst.close();
+conn.close();
+
+
+
+%>
+</table>
+</body>
+</html>
