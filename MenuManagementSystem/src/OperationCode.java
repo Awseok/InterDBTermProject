@@ -1,0 +1,4 @@
+
+public enum OperationCode {
+	MENU, DISH, FOODMATERIAL, SUPPLY, INSPECTION, EMPLOYEE  
+}
