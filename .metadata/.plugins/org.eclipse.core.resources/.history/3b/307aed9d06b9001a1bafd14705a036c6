@@ -1,0 +1,93 @@
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * Servlet implementation class Employee
+ */
+
+@WebServlet("/Employee/*")
+
+public class Employee extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
+	private int Enum;
+	private String name;
+	private String task;
+	private Employee emp;
+	
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Employee() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    public Employee(int Enum, String name, String task) {
+        emp = new Employee();
+        emp.setName(name);
+        emp.setEnum(Enum);
+        emp.setTask(task);
+        // TODO Auto-generated constructor stub
+    }
+    
+    public void setName(String name)
+    {
+    	this.name=name;
+    	
+    }
+    
+    public String getName()
+    {
+    	return name;    	
+    }
+    
+    
+
+    public void setEnum(int Enum)
+    {
+    	this.Enum=Enum;
+    	
+    }
+    
+    public Integer getEnum()
+    {
+    	return Enum;    	
+    }
+    
+
+    public void setTask(String task)
+    {
+    	this.task=task;
+    	
+    }
+    public String getTask()
+    {
+    	return task;    	
+    }
+}
+    
+    
+    
+	/*
+	 * public Integer getEno() {return eno;} public String getName() {return name;}
+	 * public String getTask() {return task;} public void setEno(Integer eno) {
+	 * this.eno= eno; } public void setName(String name) { this.name=name; } public
+	 * void settask(String task) { this.task=task; }
+	 */
+    
+ 
