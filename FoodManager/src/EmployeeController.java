@@ -11,7 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,9 +24,7 @@ import javax.sql.DataSource;
 public class EmployeeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Context ctx;
-	private DataSource ds;
 	private Connection conn;
-	private ServletContext context; 
 	private RequestDispatcher dispatcher;
 
     /**
@@ -38,7 +36,7 @@ public class EmployeeController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    private void initS()
+    public void init(ServletConfig config) throws ServletException
     {
 		try {
 			ctx = new InitialContext();
@@ -56,10 +54,32 @@ public class EmployeeController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    public void destroy() {
+    	try {
+    		conn.close();
+    	}catch(SQLException e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		initS();
+		request.setCharacterEncoding("UTF-8");
+		String enoString=request.getParameter("eno");
+		String ename = request.getParameter("name");
+		String eTask = request.getParameter("task");
+		
+		if(enoString != null)
+		{
+			if(ename == null && eTask ==null) {
+			response.sendRedirect("Employee_modify.html");
+			return;
+		}
+			EmployeeModify(Integer.parseInt(enoString),ename,eTask);
+	}
 		try {
 			PreparedStatement st = conn.prepareStatement("select * from Employee");
 			ResultSet rs = st.executeQuery();
@@ -81,6 +101,9 @@ public class EmployeeController extends HttpServlet {
 			dispatcher = request.getRequestDispatcher("Employee.jsp");
 			dispatcher.forward(request, response);
 			
+			rs.close();
+			st.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,6 +116,27 @@ public class EmployeeController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private void EmployeeModify(int eno,String name,String task)
+	{
+		try {
+			PreparedStatement st = conn.prepareStatement(
+				"merge into Employee e using dual on(e.EMPLOYEE_NUMBER=?) "
+						+ "when matched then update set e.employee_name=?,e.task=?"
+						+ "when not matched then insert (e.employee_number,e.employee_name,e.task) values (?,?,?)");
+			st.setInt(1, eno);
+			st.setString(2, name);
+			st.setString(3,task);
+			st.setInt(4, eno);
+			st.setString(5, name);
+			st.setString(6, task);
+			st.executeUpdate();
+			st.close();
+			conn.commit();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
