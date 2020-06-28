@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,13 @@
 <table>
 <tr> <th> 재료명 </th> <th> 수량 </th> </tr>
 
-<tr> <td> ${FoodMaterial[0].nut.name} </td> <td> ${FoodMaterial[0].amount} </td> </tr>
+<c:forEach var="foodList" items="${foodMaterial}">
+<tr> 
+<td> <c:out value="${foodList.nut.name}" /> </td>
+<td> <c:out value="${foodList.amount}" /> </td>
+</tr>
+</c:forEach>
+
 
 </table>
 </body>

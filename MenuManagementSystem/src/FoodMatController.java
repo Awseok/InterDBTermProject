@@ -3,8 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -66,7 +65,7 @@ public class FoodMatController extends HttpServlet {
 			PreparedStatement st = conn.prepareStatement("select * from food_marterials");
 			ResultSet rs = st.executeQuery();
 			
-			List<FoodMaterial> foodMList = new LinkedList<FoodMaterial>();
+			ArrayList<FoodMaterial> foodMList = new ArrayList<FoodMaterial>();
 			
 			while(rs.next())
 			{
@@ -77,8 +76,8 @@ public class FoodMatController extends HttpServlet {
 				
 				foodMList.add(foodM);
 			}
-			
-			request.setAttribute("FoodMaterial", foodMList);
+			int foodMListCnt = foodMList.size();
+			request.setAttribute("foodMaterial", foodMList);
 			dispatcher = request.getRequestDispatcher("food_material.jsp");
 			dispatcher.forward(request, response);
 			
