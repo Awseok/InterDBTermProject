@@ -9,14 +9,13 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-
 
 /**
  * Servlet implementation class FoodMatController
@@ -25,25 +24,26 @@ import javax.sql.DataSource;
 public class FoodMatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Context ctx;
-	private DataSource ds;
 	private Connection conn;
-	private ServletContext context; 
 	private RequestDispatcher dispatcher;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FoodMatController() {
-        super();
-       
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FoodMatController() {
+		super();
 
-    private void initS()
-    {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see Servlet#init(ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		// TODO Auto-generated method stub
 		try {
 			ctx = new InitialContext();
-			DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/xe");
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/xe");
 			conn = ds.getConnection();
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -52,35 +52,15 @@ public class FoodMatController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
-    }
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see Servlet#destroy()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void destroy() {
 		// TODO Auto-generated method stub
-
-		initS();
 		try {
-			PreparedStatement st = conn.prepareStatement("select * from food_marterials");
-			ResultSet rs = st.executeQuery();
-			
-			ArrayList<FoodMaterial> foodMList = new ArrayList<FoodMaterial>();
-			
-			while(rs.next())
-			{
-				String gradientName = rs.getString("gredient_name");
-				int amount = rs.getInt("amount");
-				
-				FoodMaterial foodM = new FoodMaterial(gradientName, amount);
-				
-				foodMList.add(foodM);
-			}
-			int foodMListCnt = foodMList.size();
-			request.setAttribute("foodMaterial", foodMList);
-			dispatcher = request.getRequestDispatcher("food_material.jsp");
-			dispatcher.forward(request, response);
-			
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,11 +68,84 @@ public class FoodMatController extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+		request.setCharacterEncoding("UTF-8");
+		String gredientName = request.getParameter("gredientName");
+		String amountString = request.getParameter("amount");
+
+		if(gredientName != null) {
+			if (amountString == null) {
+				response.sendRedirect("gredient_modify.html");
+				return;
+			}
+			gredientModify(gredientName, Integer.parseInt(amountString));
+		}
+
+		try {
+			PreparedStatement st = conn.prepareStatement("select * from food_marterials");
+			ResultSet rs = st.executeQuery();
+
+			ArrayList<FoodMaterial> foodMList = new ArrayList<FoodMaterial>();
+
+			while (rs.next()) {
+				String gradientName = rs.getString("gredient_name");
+				int amount = rs.getInt("amount");
+
+				FoodMaterial foodM = new FoodMaterial(gradientName, amount);
+
+				foodMList.add(foodM);
+			}
+			
+			rs.close();
+			st.close();
+			
+			request.setAttribute("foodMaterial", foodMList);
+			dispatcher = request.getRequestDispatcher("food_material.jsp");
+			dispatcher.forward(request, response);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+	
+	private void gredientModify(String name, int amount)
+	{
+		try {
+			PreparedStatement st = conn.prepareStatement(
+					"merge into food_marterials f using dual on(f.gredient_name=?) "
+					+ "when matched then update set f.amount=? "
+					+ "when not matched then insert (f.gredient_name, f.amount) values (?, ?)");
+			st.setString(1, name);
+			st.setInt(2, amount);
+			st.setString(3,  name);
+			st.setInt(4, amount);
+			st.executeUpdate();
+			st.close();
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

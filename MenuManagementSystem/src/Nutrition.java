@@ -8,7 +8,17 @@ public class Nutrition {
 	private String name;
 	private String ETC;
 
+	Nutrition() {};
 	
+	Nutrition(String name, int cal, int prt, int vit, int salt, String etc)
+	{
+		this.name = name;
+		this.cal = cal;
+		this.prt = prt;
+		this.vit = vit;
+		this.salt = salt;
+		this.ETC = etc;
+	}
 	public void setName(String name)
 	{
 		this.name = name;
@@ -29,6 +39,16 @@ public class Nutrition {
 		return cal;
 	}
 	
+	public void setPrt(int prt)
+	{
+		this.prt = prt;
+	}
+	
+	public int getPrt()
+	{
+		return prt;
+	}
+	
 	public void setVit(int vit)
 	{
 		this.vit = vit;
@@ -39,22 +59,22 @@ public class Nutrition {
 		return vit;
 	}
 	
-	void setSalt(int salt)
+	public void setSalt(int salt)
 	{
 		this.salt = salt;
 	}
 	
-	int getSalt()
+	public int getSalt()
 	{
 		return salt;
 	}
 	
-	void setETC(String ETC)
+	public void setETC(String ETC)
 	{
 		this.ETC = ETC;
 	}
 	
-	String getETC()
+	public String getETC()
 	{
 		return ETC;
 	}
