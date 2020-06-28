@@ -1,0 +1,13 @@
+127.0.0.1 - - [28/Jun/2020:00:27:13 +0900] "GET / HTTP/1.1" 404 750
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:27:13 +0900] "GET /FoodManager/Index.jsp HTTP/1.1" 200 230
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:27:41 +0900] "GET /FoodManager/Index.jsp HTTP/1.1" 200 256
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:27:43 +0900] "GET /FoodManager/Search_Employee.jsp HTTP/1.1" 200 366
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:27:58 +0900] "GET /FoodManager/Search_Employee.jsp HTTP/1.1" 200 370
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:28:01 +0900] "POST /FoodManager/search.jsp HTTP/1.1" 200 181
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:28:26 +0900] "POST /FoodManager/search.jsp HTTP/1.1" 500 3927
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:28:32 +0900] "GET /FoodManager/Index.jsp HTTP/1.1" 200 256
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:28:32 +0900] "GET /FoodManager/Search_Employee.jsp HTTP/1.1" 200 370
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:28:37 +0900] "POST /FoodManager/search.jsp HTTP/1.1" 500 3927
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:28:58 +0900] "GET /FoodManager/Index.jsp HTTP/1.1" 200 256
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:28:59 +0900] "GET /FoodManager/Search_Employee.jsp HTTP/1.1" 200 370
+0:0:0:0:0:0:0:1 - - [28/Jun/2020:00:29:03 +0900] "POST /FoodManager/search.jsp HTTP/1.1" 200 197

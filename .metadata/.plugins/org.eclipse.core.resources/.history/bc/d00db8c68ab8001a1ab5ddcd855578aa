@@ -12,7 +12,7 @@
 <form action="search.jsp" method="post" accept-charset="utf-8">
 직원 이름:
 <input type="text" name="e_name">
-<br><br>
+<br>
 
 직원 번호:
 <input type="text" name="e_no">

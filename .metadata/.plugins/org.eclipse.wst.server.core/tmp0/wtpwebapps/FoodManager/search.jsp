@@ -26,8 +26,8 @@ String name=rs.getString("EMPLOYEE_NAME");
 String task=rs.getString("TASK");
 %>
 
-직원번호 : <%=eno %>
-이름: <%=name %>
+직원번호 : <%=eno %><br><br>
+이름: <%=name %><br><br>
 업무: <%=task %><%
 }
 

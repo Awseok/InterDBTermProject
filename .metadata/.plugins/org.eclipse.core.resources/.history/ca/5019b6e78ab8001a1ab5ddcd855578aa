@@ -28,7 +28,7 @@ String task=rs.getString("TASK");
 
 직원번호 : <%=eno %><br><br>
 이름: <%=name %><br><br>
-업무: <%=task %><%
+업무: <%=task %><%<br><br>
 }
 
 rs.close();
