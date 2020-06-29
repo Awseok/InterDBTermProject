@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="UTF-8" import="java.net.URLEncoder"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +20,10 @@
 
 <c:forEach var="supList" items="${supList}">
 
-
+<c:url value="/SupplierController" var="del_url">
+  <c:param name="form" value="delete" />
+  <c:param name="name" value="${supList.sup.name}"/>
+</c:url>
 
 
 <tr> 
@@ -31,7 +37,7 @@
   <c:param name="name" value="${supList.sup.name}" />
 </c:url>
 
-<a href="${sup_url}" > 수정 </a>
+<a href="${sup_url}" > 수정 </a>   <a href="${del_url}" > 삭제 </a>
 </tr>
 </c:forEach>
 

@@ -19,7 +19,7 @@
 
 <c:url value="/SupplyController" var="sup_url">
   <c:param name="form" value="delete" />
-  <c:param name="sno" value="${supplyList.supply.sno}" />
+  <c:param name="sno" value="${supplyList.supply.sno}"/>
 </c:url>
 
 <tr> 
@@ -29,6 +29,7 @@
 <td> <c:out value="${supplyList.supply.gname}"/> </td>
 <td> <c:out value="${supplyList.supply.sname}" /> </td>
 <td> <c:out value="${supplyList.supply.edate}" /> </td>
+
 
 <td>
 

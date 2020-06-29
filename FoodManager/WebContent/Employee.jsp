@@ -26,12 +26,15 @@
 <td> <c:out value="${empList.emp.task}" /> </td>
 
 <td>
-
+<c:url value="/EmployeeController" var="del_url">
+  <c:param name="form" value="delete" />
+  <c:param name="eno" value="${empList.emp.eno}"/>
+</c:url>
 <c:url value="/EmployeeController" var="emp_url">
   <c:param name="eno" value="${empList.emp.name}" />
 </c:url>
 
-<a href="${emp_url}" > 수정 </a>
+<a href="${emp_url}" > 수정 </a> <a href="${del_url}" > 삭제 </a>
 </tr>
 </c:forEach>
 

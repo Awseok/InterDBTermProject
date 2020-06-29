@@ -71,8 +71,16 @@ public class EmployeeController extends HttpServlet {
 		String enoString=request.getParameter("eno");
 		String ename = request.getParameter("name");
 		String eTask = request.getParameter("task");
+		String form= request.getParameter("form");
 		
-		if(enoString != null)
+		if (form != null && enoString != null)
+		{
+			
+			System.out.println("Å×½ºÆ®2");
+			deleteMember(Integer.parseInt(enoString));
+		}
+		
+		if(enoString != null && form == null)
 		{
 			if(ename == null && eTask ==null) {
 			response.sendRedirect("Employee_modify.html");
@@ -138,5 +146,32 @@ public class EmployeeController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteMember(int eno) 
+    { 
+        try {         
+            PreparedStatement pstmt = conn.prepareStatement("select * from employee where employee_number=?");
+            pstmt.setInt(1, eno);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) 
+            {                               
+                    pstmt = conn.prepareStatement("delete from employee where employee_number=?");
+                    pstmt.setInt(1, eno);
+                    ;
+                    pstmt.executeUpdate();
+                    conn.commit(); 
+                                                 
+            }            
+ 
+        } catch (Exception sqle) {
+            try {
+                conn.rollback(); 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throw new RuntimeException(sqle.getMessage());
+        } 
+    } 
+
 
 }

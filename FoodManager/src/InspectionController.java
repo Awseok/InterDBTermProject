@@ -73,8 +73,15 @@ public class InspectionController extends HttpServlet {
 		String name = request.getParameter("name");
 		String edate = request.getParameter("date");
 		String eresult = request.getParameter("result");
+		String form= request.getParameter("form");
 		
-		if(inoString != null)
+		if (form != null && inoString != null)
+		{
+			
+			System.out.println("Å×½ºÆ®2");
+			deleteMember(Integer.parseInt(inoString));
+		}
+		if(inoString != null && form == null)
 		{			
 			if(enoString == null && eresult ==null) {
 			response.sendRedirect("Inspection_modify.html");
@@ -146,5 +153,30 @@ public class InspectionController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	public void deleteMember(int ino) 
+    { 
+        try {         
+            PreparedStatement pstmt = conn.prepareStatement("select * from inspection_result where inspection_key=?");
+            pstmt.setInt(1, ino);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) 
+            {                               
+                    pstmt = conn.prepareStatement("delete from inspection_result where inspection_key=?");
+                    pstmt.setInt(1, ino);
+                    ;
+                    pstmt.executeUpdate();
+                    conn.commit(); 
+                                                 
+            }            
+ 
+        } catch (Exception sqle) {
+            try {
+                conn.rollback(); 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throw new RuntimeException(sqle.getMessage());
+        } 
+    } 
 
 }

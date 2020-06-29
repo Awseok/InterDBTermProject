@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,11 +71,21 @@ public class SupplierController extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		request.setCharacterEncoding("UTF-8");
-		String bnoString=request.getParameter("bno");
+		
+		String bnoString = request.getParameter("bno");
 		String sname = request.getParameter("name");
 		String cno = request.getParameter("cno");
+		String form= request.getParameter("form");
 		
-		if(sname != null)
+		System.out.println(sname);
+
+		if (form != null && sname!= null)
+		{
+			
+			System.out.println("Å×½ºÆ®2");
+			deleteMember(sname);
+		}
+		if(sname != null && form == null )
 		{
 			if(cno == null && bnoString ==null) {
 			response.sendRedirect("Supplier_modify.html");
@@ -142,7 +154,32 @@ public class SupplierController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+	public void deleteMember(String sname) 
+    { 
+        try {     
+            PreparedStatement pstmt = conn.prepareStatement("select * from supplier where supplier_name=?");
+            pstmt.setString(1, sname);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) 
+            {                             
+                    pstmt = conn.prepareStatement("delete from supplier where supplier_name=?");
+
+                    pstmt.setString(1, sname);
+
+                    pstmt.executeUpdate();
+                    conn.commit(); 
+                                                 
+            }            
+ 
+        } catch (Exception sqle) {
+            try {
+                conn.rollback(); 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throw new RuntimeException(sqle.getMessage());
+        } 
+    } 
 	
 
 }

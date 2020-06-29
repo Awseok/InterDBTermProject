@@ -166,32 +166,20 @@ public class SupplyController extends HttpServlet {
 	}
 	
 	public void deleteMember(int sno) 
-    {
- 
-       
- 
-        try {
-         
+    { 
+        try {         
             PreparedStatement pstmt = conn.prepareStatement("select * from supply where supply_key=?");
             pstmt.setInt(1, sno);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) 
-            {
-                String dbsno = rs.getString("Supply_key");
-                
-                
-                    // 같을경우 회원삭제 진행
+            {                               
                     pstmt = conn.prepareStatement("delete from supply where supply_key=?");
                     pstmt.setInt(1, sno);
                     ;
                     pstmt.executeUpdate();
                     conn.commit(); 
-                                      
-                
-            }
- 
-            
-            
+                                                 
+            }            
  
         } catch (Exception sqle) {
             try {
@@ -201,6 +189,5 @@ public class SupplyController extends HttpServlet {
             }
             throw new RuntimeException(sqle.getMessage());
         } 
-    } // end deleteMember
-
+    } 
 }

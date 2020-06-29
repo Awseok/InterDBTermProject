@@ -21,6 +21,11 @@
   <c:param name="ino" value="${insList.ins.ino}" />
 </c:url>
 
+<c:url value="/InspectionController" var="del_url">
+  <c:param name="form" value="delete" />
+  <c:param name="ino" value="${insList.ins.ino}"/>
+</c:url>
+
 
 <tr> 
 <td> <c:out value="${insList.ins.ino}"/>  </td>
@@ -31,7 +36,7 @@
 
 <td>
 
-<a href="${ins_url}" > 수정 </a>
+<a href="${ins_url}" > 수정 </a> <a href="${del_url}" > 삭제 </a>
 </tr>
 </c:forEach>
 
