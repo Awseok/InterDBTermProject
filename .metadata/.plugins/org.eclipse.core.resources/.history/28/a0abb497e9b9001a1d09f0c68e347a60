@@ -9,7 +9,6 @@ public class Inspection extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int ino;
 	private int eno;
-	private String name;
 	private String date;
 	private String result;
 	private Inspection ins;
@@ -19,14 +18,13 @@ public class Inspection extends HttpServlet {
 		super();
 	};
 	
-	public Inspection(int ino,String name,int eno,String date,String result)
+	public Inspection(int ino,int eno,String date,String result)
 	{
 		ins = new Inspection();
 		ins.setIno(ino);
 		ins.setEno(eno);
 		ins.setDate(date);
 		ins.setResult(result);
-		ins.setName(name);
 	}
 	
 	public void setIno(int ino)
@@ -58,14 +56,6 @@ public class Inspection extends HttpServlet {
 		return date;
 	}
 	
-	public void setName(String name)
-	{
-		this.name=name;
-	}
-	public String getname()
-	{
-		return name;
-	}
 	public void setResult(String result)
 	{
 		this.result=result;

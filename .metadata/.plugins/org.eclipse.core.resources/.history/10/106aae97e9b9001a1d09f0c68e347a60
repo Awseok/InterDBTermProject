@@ -13,7 +13,7 @@
 <h1> 위생 관리 시스템</h1>
 
 <table>
-<tr> <th> 검사 번호</th> <th>직원 이름 </th>  <th> 직원 번호 </th><th> 검사 일시 </th> <th> 검사 결과 </th> </tr>
+<tr> <th> 검사 번호</th>  <th> 직원 번호 </th><th> 검사 일시 </th> <th> 검사 결과 </th> </tr>
 
 <c:forEach var="insList" items="${insList}">
 
@@ -24,7 +24,6 @@
 
 <tr> 
 <td> <c:out value="${insList.ins.ino}"/>  </td>
-<td> <c:out value="${insList.ins.name }"/>
 <td> <c:out value="${insList.ins.eno}"/>  </td>
 <td> <c:out value="${insList.ins.date}" /> </td>
 <td> <c:out value="${insList.ins.result}" /> </td>

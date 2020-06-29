@@ -10,7 +10,6 @@
 <form action="http://localhost:8080/FoodManager/InspectionController">
 
 검사번호 : <input type="number" name="ino"> <br />
-직원이름 : <input type="txet" name="name"> <br />
 직원번호 : <input type="number" name="eno"> <br />
 점검날짜 : <input type="text" name="date"> <br />
 점검결과 : <input type="text" name="result"> <br />

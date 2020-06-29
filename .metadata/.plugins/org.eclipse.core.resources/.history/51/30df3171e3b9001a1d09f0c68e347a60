@@ -80,6 +80,7 @@ public class SupplierController extends HttpServlet {
 				supList.add(Sup);
 			}
 			
+			int supListCnt = supList.size();
 			request.setAttribute("supList", supList);
 			dispatcher = request.getRequestDispatcher("Supplier.jsp");
 			dispatcher.forward(request, response);

@@ -80,7 +80,7 @@ public class InspectionController extends HttpServlet {
 			response.sendRedirect("Inspection_modify.html");
 			return;
 		}
-			InspectionModify(Integer.parseInt(inoString),name,Integer.parseInt(enoString),edate,eresult);
+			InspectionModify(Integer.parseInt(inoString),Integer.parseInt(enoString),edate,eresult);
 	}
 		try {
 			PreparedStatement st = conn.prepareStatement("select * from Inspection_result");
@@ -128,7 +128,7 @@ public class InspectionController extends HttpServlet {
 			PreparedStatement st = conn.prepareStatement(
 				"merge into Inspection_result i using dual on(i.INSPECTION_KEY=?)"
 						+"when matched then update set i.employee_name=?, i.employee_number=?,i.inspection_date=?,i.result=?"
-						+"when not matched then insert (i.inspection_key,i.employee_name,i.employee_number,i.inspection_date,i.result) values (?,?,?,?,?)");
+						+"when not matched then insert (i.inspection_key,i.,i.employee_name,i.employee_number,i.inspection_date,i.result) values (?,?,?,?,?)");
 			st.setInt(1, ino);
 			st.setString(2,ename);
 			st.setInt(3, eno);
