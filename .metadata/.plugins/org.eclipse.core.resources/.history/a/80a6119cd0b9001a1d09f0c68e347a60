@@ -1,0 +1,139 @@
+
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+/**
+ * Servlet implementation class NutritionController
+ */
+@WebServlet("/InspectionController")
+public class InspectionController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private Context ctx;
+	private Connection conn;
+	private RequestDispatcher dispatcher;
+	private Inspection inspection;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public InspectionController() {
+        super();
+    }
+
+	/**
+	 * @see Servlet#init(ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		try {
+			ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/xe");
+			conn = ds.getConnection();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @see Servlet#destroy()
+	 */
+	public void destroy() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+
+		String eno = request.getParameter("eno");
+		String date = request.getParameter("date");
+		String result = request.getParameter("result");
+		
+		
+		if(eno !=null)
+		{
+			System.out.println("2¹øÂ°");
+			PreparedStatement ps;
+			try {
+				ps = conn.prepareStatement("merge into inspection_result i using dual on(i.employee_number=?) "
+						+ "when matched then update set i.inspection_date=?, i.result=? "
+						+ "when not matched then insert (i.employee_number, i.inspection_date, i.result) "
+						+ "values (?, ?, ?)");
+				ps.setInt(1, Integer.parseInt(eno));
+				ps.setString(2, date);
+				ps.setString(3, result);
+				ps.setInt(4,  Integer.parseInt(eno));
+				ps.setString(5, date);
+				ps.setString(6, result);
+				ps.executeUpdate();
+				ps.close();
+				conn.commit();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				
+				return ;
+			}
+
+		}
+		
+		
+		if(eno == null)
+			return;	
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from inspection_result where employee_number=?");
+			ps.setInt(1, Integer.parseInt(eno));
+			ResultSet rs = ps.executeQuery();
+			if(rs.next())
+			{
+				int employee_number = rs.getInt("EMPLOYEE_NUMBER");
+				String edate = rs.getString("INSPECTION_DATE");
+				String eresult = rs.getString("RESULT");
+				
+				inspection = new Inspection(employee_number,edate,eresult);
+				
+				request.setAttribute("inspection", inspection);
+				
+				dispatcher = request.getRequestDispatcher("inspection.jsp");
+				dispatcher.forward(request, response);
+			}
+			else
+				response.sendRedirect("inspection_modify.html");
+			
+		} catch (SQLException e) {
+
+
+			response.sendRedirect("inspection_modify.html");
+		}
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+}

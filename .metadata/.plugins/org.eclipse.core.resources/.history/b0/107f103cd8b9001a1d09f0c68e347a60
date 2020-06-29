@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>점검 결과 등록</title>
+</head>
+<body>
+<h1> 점검 결과 등록 </h1>
+
+<form action="http://localhost:8080/FoodManagerr/InspectionController">
+
+검사번호 : <input type="number" name="ino"> <br />
+직원번호 : <input type="number" name="eno"> <br />
+점검날짜 : <input type="text" name="date"> <br />
+점검결과 : <input type="text" name="result"> <br />
+<input type="submit">
+</form>
+</body>
+</html>

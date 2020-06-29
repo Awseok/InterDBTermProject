@@ -1,0 +1,78 @@
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+
+@WebServlet("/Inspection/*")
+
+
+public class Inspection extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	private int ino;
+	private int eno;
+	private String date;
+	private String result;
+	private Inspection ins;
+	
+	
+	public Inspection(){
+		super();
+	};
+	
+	public Inspection(int ino,int eno,String date,String result)
+	{
+		ins = new Inspection();
+		this.ino=ino;
+		this.eno=eno;
+		this.date=date;
+		this.result=result;
+	}
+	
+	public void setIno(int ino)
+	{
+		this.ino=ino;
+	}
+	
+	public int getIno()
+	{
+		return ino;
+	}
+	public void setEno(int eno)
+	{
+		this.eno=eno;
+	}
+	
+	public int getEno()
+	{
+		return eno;
+	}
+	
+	public void setDate(String Date)
+	{
+		this.date=Date;
+	}
+	
+	public String getDate()
+	{
+		return date;
+	}
+	
+	public void setResult(String result)
+	{
+		this.result=result;
+	}
+	
+	public String getResult()
+	{
+		return result;
+	}
+	
+    public void setIns(Inspection ins)
+    {
+    	this.ins=ins;
+    }
+    public Inspection getIns()
+    {
+    	return ins;
+    }
+	
+}

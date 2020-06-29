@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>점검 정보</title>
+</head>
+<body>
+<h1> 점검 정보  </h1>
+<table>
+<tr> <th> 검사 번호 </th><th> 직원 번호 </th> <th> 점검 일시 </th> <th>점검 결과 </th>  </tr>
+<tr> <td>  ${inspection.ino }</td> <td> ${inspection.eno} </td> <td> ${inspection.date} </td> <td> ${inspection.result} </td></tr>
+</table>
+<a href="Inspection_modify.html"> 추가 </a>
+
+</body>
+
+</html>

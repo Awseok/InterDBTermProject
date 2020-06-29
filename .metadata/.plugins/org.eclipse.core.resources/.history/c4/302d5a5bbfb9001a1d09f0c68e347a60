@@ -1,0 +1,49 @@
+
+public class Inspection {
+
+	
+	private int eno;
+	private String Date;
+	private String result;
+	
+	
+	
+	Inspection(){};
+	
+	Inspection(int eno,String date,String result)
+	{
+		this.eno=eno;
+		this.Date=date;
+		this.result=result;
+	}
+	public void setEno(int eno)
+	{
+		this.eno=eno;
+	}
+	
+	public int getEno()
+	{
+		return eno;
+	}
+	
+	public void setDate(String Date)
+	{
+		this.Date=Date;
+	}
+	
+	public String getDate()
+	{
+		return Date;
+	}
+	
+	public void setResult(String result)
+	{
+		this.result=result;
+	}
+	
+	public String getResult()
+	{
+		return result;
+	}
+	
+}

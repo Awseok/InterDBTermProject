@@ -1,12 +1,41 @@
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 
-public class Inspection {
+@WebServlet("/Inspection/*")
 
-	
+
+public class Inspection extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	private int ino;
 	private int eno;
-	private String Date;
+	private String date;
 	private String result;
+	private Inspection ins;
 	
 	
+	public Inspection(){
+		super();
+	};
+	
+	public Inspection(int ino,int eno,String date,String result)
+	{
+		ins = new Inspection();
+		ins.setIno(ino);
+		ins.setEno(eno);
+		ins.setDate(date);
+		ins.setResult(result);
+	}
+	
+	public void setIno(int ino)
+	{
+		this.ino=ino;
+	}
+	
+	public int getIno()
+	{
+		return ino;
+	}
 	public void setEno(int eno)
 	{
 		this.eno=eno;
@@ -19,12 +48,12 @@ public class Inspection {
 	
 	public void setDate(String Date)
 	{
-		this.Date=Date;
+		this.date=Date;
 	}
 	
 	public String getDate()
 	{
-		return Date;
+		return date;
 	}
 	
 	public void setResult(String result)
@@ -36,5 +65,14 @@ public class Inspection {
 	{
 		return result;
 	}
+	
+    public void setIns(Inspection ins)
+    {
+    	this.ins=ins;
+    }
+    public Inspection getIns()
+    {
+    	return ins;
+    }
 	
 }

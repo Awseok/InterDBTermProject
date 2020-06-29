@@ -17,20 +17,19 @@
 
 <c:forEach var="empList" items="${empList}">
 
-<c:url value="/EmployeeController" var="emp_url">
-<c:param name="name" value="${empList.emp.name }" />
-</c:url>
+
+
 
 <tr> 
-<td> <a href="${emp_url}">  <c:out value="${empList.emp.eno}"/>  </a>  </td>
+<td> <c:out value="${empList.emp.eno}"/>  </td>
 <td> <c:out value="${empList.emp.name}" /> </td>
 <td> <c:out value="${empList.emp.task}" /> </td>
+
 <td>
 
 <c:url value="/EmployeeController" var="emp_url">
-  <c:param name="name" value="${foodList.emp.name}" />
+  <c:param name="eno" value="${empList.emp.name}" />
 </c:url>
-
 
 <a href="${emp_url}" > 수정 </a>
 </tr>
@@ -40,5 +39,8 @@
 </table>
 
 <a href="Employee_modify.html"> 추가 </a>
+<br><br>
+
+<a href="InspectionController"> 위생 검사 </a>
 
 </body>
