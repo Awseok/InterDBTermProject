@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>요리 등록 및 수정</title>
+</head>
+<body>
+<h1> 요리 등록 및 수정 </h1>
+<p> 키가 등록되어 있지 않으면 되돌아옵니다. </p>
+<form action="http://localhost:8080/MenuManagementSystem/DishController">
+요리명     : <input type="text" name="dishName">
+레시피 키 : <input type="number" name="recipeKey">
+<input type="hidden" name="opcode" value="ModifyDish">
+<input type="submit">
+</form>
+
+</body>
+</html>

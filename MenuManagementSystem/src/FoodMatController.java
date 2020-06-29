@@ -78,13 +78,19 @@ public class FoodMatController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String gredientName = request.getParameter("gredientName");
 		String amountString = request.getParameter("amount");
-
-		if(gredientName != null) {
-			if (amountString == null) {
+		String opcode = request.getParameter("opcode");
+		
+		if(gredientName != null || opcode != null) {
+			if ("modify".equals(opcode)) {
 				response.sendRedirect("gredient_modify.html");
 				return;
 			}
-			gredientModify(gredientName, Integer.parseInt(amountString));
+			else if("deleteGredient".equals(opcode))
+				delGredient(request, response);
+			else if("modifyGredient".equals(opcode)) 
+				gredientModify(gredientName, Integer.parseInt(amountString));
+			else if("delNutrition".equals(opcode))
+				delNutrition(request, response);	
 		}
 
 		try {
@@ -126,6 +132,34 @@ public class FoodMatController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private void delNutrition(HttpServletRequest request, HttpServletResponse response)
+	{
+		try {
+			PreparedStatement st = conn.prepareStatement("delete from nutrition where gredient_name=?");
+			String gredientName = request.getParameter("gredientName");
+			st.setString(1, gredientName);
+			st.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private void delGredient(HttpServletRequest request, HttpServletResponse response)
+	{
+		try {
+			PreparedStatement st = conn.prepareStatement("delete from food_marterials where gredient_name=?");
+			String gredientName = request.getParameter("gredientName");
+			st.setString(1, gredientName);
+			st.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void gredientModify(String name, int amount)

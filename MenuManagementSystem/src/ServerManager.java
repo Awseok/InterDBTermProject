@@ -42,7 +42,6 @@ public class ServerManager extends HttpServlet {
 		try{
 			OperationCode.valueOf(opcode);
 		} catch (IllegalArgumentException e){
-			// 경고 메시지 반환
 		}
 		
 		int opcodeInt = OperationCode.valueOf(opcode).ordinal();
@@ -55,6 +54,8 @@ public class ServerManager extends HttpServlet {
 		case 1:
 			break;
 		case 2:
+			dispatcher = context.getRequestDispatcher("/FoodMatController?opcode=search");
+			dispatcher.forward(request, response);
 			break;
 		case 3:
 			dispatcher = context.getRequestDispatcher("/FoodMatController");

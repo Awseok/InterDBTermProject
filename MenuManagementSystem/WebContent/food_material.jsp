@@ -16,6 +16,8 @@
 
 <c:forEach var="foodList" items="${foodMaterial}">
 
+
+
 <c:url value="/NutritionController" var="nut_url">
   <c:param name="gredientName" value="${foodList.nut.name}" />
 </c:url>
@@ -27,14 +29,24 @@
 
 <c:url value="/FoodMatController" var="food_url">
   <c:param name="gredientName" value="${foodList.nut.name}" />
+  <c:param name="opcode" value="modify" />
 </c:url>
 
 <a href="${food_url}" > 수정 </a>
+</td>
+<td>
+<c:url value="/FoodMatController" var="deleteGre">
+	<c:param name="opcode" value="deleteGredient" />
+	<c:param name="gredientName" value="${foodList.nut.name}" />
+</c:url>
+<a href="${deleteGre}"> 삭제 </a>
+</td>
 </tr>
 </c:forEach>
 </table>
 
 <a href="gredient_modify.html"> 추가 </a>
+
 
 </body>
 </html>

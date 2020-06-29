@@ -75,7 +75,7 @@ public class NutritionController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		String gredientName = request.getParameter("gredientName");
-		System.out.println(gredientName);
+		String opcode = request.getParameter("opcode");
 		
 		String kcal = request.getParameter("kcal");
 		String prt = request.getParameter("prt");
@@ -83,9 +83,8 @@ public class NutritionController extends HttpServlet {
 		String sal = request.getParameter("salt");
 		String ETC =request.getParameter("ETC");
 		
-		if(kcal != null || prt != null || vit != null || sal != null || ETC != null)
+		if(opcode !=null && "modify".equals(opcode))
 		{
-			System.out.println("2번째");
 			PreparedStatement ps;
 			try {
 				ps = conn.prepareStatement("merge into nutrition n using dual on(n.gredient_name=?) "
@@ -108,10 +107,8 @@ public class NutritionController extends HttpServlet {
 				ps.executeUpdate();
 				ps.close();
 				conn.commit();
-				System.out.println("3번째");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				System.out.println("실패");
 				return ;
 			}
 
