@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context docBase="C:\Users\ddlau\eclipse-workspace\Food\InterDBTermProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\FoodManager" path="/FoodManager" reloadable="true" source="org.eclipse.jst.jee.server:FoodManager">
-<Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxActive="2" maxIdle="1" maxWait="3000" name="jdbc/xe" password="201512109" removeAbandoned="true" removeAbandonedTimeout="3" type="javax.sql.DataSource" url="jdbc:oracle:thin:@db.pknu.ac.kr:1521:xe" username="db201512109"/>
+<Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxActive="5" maxIdle="5" maxWait="3000" name="jdbc/xe" password="201512109" removeAbandoned="true" removeAbandonedTimeout="3" type="javax.sql.DataSource" url="jdbc:oracle:thin:@db.pknu.ac.kr:1521:xe" username="db201512109"/>
 </Context>

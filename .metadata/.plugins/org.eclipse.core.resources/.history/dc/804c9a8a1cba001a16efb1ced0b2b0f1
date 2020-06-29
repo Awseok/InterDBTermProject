@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>납품 정보 등록</title>
+</head>
+<body>
+<h1> 납품 정보 등록 </h1>
+
+<form action="http://localhost:8080/FoodManager/SupplyController">
+납품번호 :<input type="number" name="sno"> <br/><br>
+납품일자 :<input type="text" name="sdate"> <br/><br>
+수량      :<input type="number" name="amount"> <br/><br>
+재료 이름:<input type="text" name="gname"> <br/><br>
+납품업자 :<input type="text" name="sname"> <br/><br>
+유통기한 :<input type="text" name="edate"> <br/><br>
+
+<input type="submit">
+</form>
+</body>
+</html>

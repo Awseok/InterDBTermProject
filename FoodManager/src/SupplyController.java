@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -19,13 +20,12 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class NutritionController
  */
-@WebServlet("/NutritionController")
+@WebServlet("/SupplyController")
 public class SupplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Context ctx;
 	private Connection conn;
 	private RequestDispatcher dispatcher;
-	private Supply Sup;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -75,77 +75,84 @@ public class SupplyController extends HttpServlet {
 		String gname = request.getParameter("gname");
 		
 		String snoString = request.getParameter("sno");
-		int sno = Integer.parseInt(snoString);
-		System.out.println(snoString);
 
 		String sdate = request.getParameter("sdate");
 		String amount = request.getParameter("amount");
 		String sname = request.getParameter("sname");
 		String edate =request.getParameter("edate");
+		String form= request.getParameter("form");
+		
+		if (snoString != null && form != null)
+		{
+			System.out.println("테스트1");
+			deleteMember(Integer.parseInt(snoString));
+		}
 		
 		if(sdate != null || amount != null || sname != null || edate != null || gname != null)
 		{
-			System.out.println("2번째");
-			PreparedStatement ps;
 			try {
-				ps = conn.prepareStatement("merge into Supply s using dual on(s.supply_key=?) "
-						+ "when matched then update set s.supply_Date=?, s.amount=?, s.gredient_name=?, s.supplier_name=?, s.expiration_date=? "
-						+ "when not matched then insert (s.supply_key,s.supply_date,s.amount,s.gredient_name,s.supplier_name,s.expiration_date) "
-						+ "values (?, ?, ?, ?, ?, ?)");
-				ps.setInt(1, sno);
-				ps.setString(2, sdate);
+				PreparedStatement ps = conn.prepareStatement(
+						"merge into Supply s using dual on(s.supply_key=?) "
+						+ "when matched then update set s.supply_date=?,s.amount=?,s.gredient_name=?,s.supplier_name=?,s.expiration_date=? "
+						+ "when not matched then insert (s.supply_key,s.supply_date,s.amount,s.gredient_name,s.supplier_name,s.expiration_date) values (?,?,?,?,?,?)");
+				ps.setInt(1,Integer.parseInt(snoString));
+				ps.setString(2,sdate);
 				ps.setInt(3, Integer.parseInt(amount));
-				ps.setString(4, gname);
-				ps.setString(5, sname);
-				ps.setString(6, edate);
-				ps.setInt(7, sno);
-				ps.setString(8, sdate);
-				ps.setInt(9,  Integer.parseInt(amount));
-				ps.setString(10, gname);
-				ps.setString(11, sdate);
-				ps.setString(12, edate);
-				
+				ps.setString(4,gname);
+				ps.setString(5,sname);
+				ps.setString(6,edate);
+				ps.setInt(7,Integer.parseInt(snoString));
+				ps.setString(8,sdate);
+				ps.setInt(9,Integer.parseInt(amount));
+				ps.setString(10,gname);
+				ps.setString(11,sname);
+				ps.setString(12,edate);
+				System.out.println(sname);
 				ps.executeUpdate();
 				ps.close();
 				conn.commit();
-				System.out.println("3번째");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				System.out.println("실패");
+				e.printStackTrace();
 				return ;
 			}
 
 		}
 		
+	
 		
-		if(snoString == null)
-			return;	
+		
+	
 		try {
-			PreparedStatement ps = conn.prepareStatement("select * from supply where supply_key=?");
-			ps.setInt(1, sno);
+			PreparedStatement ps = conn.prepareStatement("select * from supply");
+			ArrayList<Supply> supplyList = new ArrayList<Supply>();	
+
 			ResultSet rs = ps.executeQuery();
-			if(rs.next())
+			while(rs.next())
 			{
-				int Sno = rs.getInt("supply_key");
-				String Sdate = rs.getString("Supply_Date");
+				int Sno = rs.getInt("SUPPLY_KEY");
+				String Sdate = rs.getString("SUPPLY_DATE");
 				int Amount = rs.getInt("amount");
 				String Gname = rs.getString("gredient_name");
-				String Sname = rs.getString("SUPPLIER_NAME");
+				String Sname = rs.getString("supplier_name");
 				String Edate = rs.getString("expiration_date");
 				
-				Sup = new Supply(Sno,Sdate,Amount,Gname,Sname,Edate);
-				
-				request.setAttribute("sup", Sup);
-				
+				Supply supply = new Supply(Sno,Sdate,Amount,Gname,Sname,Edate);
+				supplyList.add(supply);
+
+				request.setAttribute("supplyList", supplyList);
+			}
 				dispatcher = request.getRequestDispatcher("Supply.jsp");
 				dispatcher.forward(request, response);
-			}
-			else
-				response.sendRedirect("Supply.modify.html");
+				
+				rs.close();
+				ps.close();
+			
+			
+			
 			
 		} catch (SQLException e) {
-			
-			response.sendRedirect("Supply.modify.html");
+			e.printStackTrace();
 		}
 		
 	}
@@ -157,4 +164,43 @@ public class SupplyController extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	public void deleteMember(int sno) 
+    {
+ 
+       
+ 
+        try {
+         
+            PreparedStatement pstmt = conn.prepareStatement("select * from supply where supply_key=?");
+            pstmt.setInt(1, sno);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) 
+            {
+                String dbsno = rs.getString("Supply_key");
+                
+                
+                    // 같을경우 회원삭제 진행
+                    pstmt = conn.prepareStatement("delete from supply where supply_key=?");
+                    pstmt.setInt(1, sno);
+                    ;
+                    pstmt.executeUpdate();
+                    conn.commit(); 
+                                      
+                
+            }
+ 
+            
+            
+ 
+        } catch (Exception sqle) {
+            try {
+                conn.rollback(); 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throw new RuntimeException(sqle.getMessage());
+        } 
+    } // end deleteMember
+
 }

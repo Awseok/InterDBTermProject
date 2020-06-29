@@ -1,14 +1,18 @@
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 
-public class Supply {
+@WebServlet("/Supply/*")
 
-	
+public class Supply extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 	private int sno;
 	private int amount;
 	private String gname;
 	private String sname;
-	private String sDate;
-	private String eDate;
-	private Supply sup;
+	private String sdate;
+	private String edate;
+	private Supply supply;
 	
 	
 	public Supply()
@@ -16,15 +20,15 @@ public class Supply {
 		super();
 	}
 	
-	public Supply(int sno,String sDate,int amount, String gname, String sname,String eDate)
+	public Supply(int sno,String sdate,int amount, String gname, String sname,String edate)
 	{
-		sup = new Supply();
-		sup.setSno(sno);
-		sup.setSDate(sDate);
-		sup.setAmount(amount);
-		sup.setGname(gname);
-		sup.setSname(sname);
-		sup.setEDate(eDate);
+		supply = new Supply();
+		supply.setSno(sno);
+		supply.setSdate(sdate);
+		supply.setAmount(amount);
+		supply.setGname(gname);
+		supply.setSname(sname);
+		supply.setEdate(edate);
 		
 	}
 	
@@ -68,25 +72,33 @@ public class Supply {
 	}
 	
 	
-	public void setSDate(String sDate)
+	public void setSdate(String sdate)
 	{
-		this.sDate=sDate;
+		this.sdate=sdate;
 	}
 	
-	public String getSDate()
+	public String getSdate()
 	{
-		return sDate;
+		return sdate;
 	}
 	
-	public void setEDate(String eDate)
+	public void setEdate(String edate)
 	{
-		this.eDate=eDate;
+		this.edate=edate;
 	}
 	
-	public String getEDate()
+	public String getEdate()
 	{
-		return eDate;
+		return edate;
 	}
 	
+	  public void setSupply(Supply supply)
+	    {
+	    	this.supply=supply;
+	    }
+	    public Supply getSupply()
+	    {
+	    	return supply;
+	    }
 	
 }

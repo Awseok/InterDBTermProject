@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 
 
 /**
- * Servlet implementation class FoodMatController
  */
 @WebServlet("/SupplierController")
 public class SupplierController extends HttpServlet {
@@ -143,4 +142,7 @@ public class SupplierController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
 }

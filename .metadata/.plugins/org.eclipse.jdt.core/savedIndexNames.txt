@@ -1,5 +1,4 @@
 INDEX VERSION 1.131+C:\Users\ddlau\eclipse-workspace\Food\InterDBTermProject\.metadata\.plugins\org.eclipse.jdt.core
-591101660.index
 971378871.index
 2751811751.index
 2158205419.index
@@ -21,9 +20,9 @@ INDEX VERSION 1.131+C:\Users\ddlau\eclipse-workspace\Food\InterDBTermProject\.me
 4190966680.index
 3546100641.index
 3259301653.index
-2769092460.index
 2476351216.index
+2769092460.index
 4276758565.index
-2254571451.index
 911398812.index
+2254571451.index
 2793326057.index
