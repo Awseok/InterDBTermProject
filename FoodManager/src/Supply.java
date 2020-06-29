@@ -8,7 +8,25 @@ public class Supply {
 	private String sname;
 	private String sDate;
 	private String eDate;
+	private Supply sup;
 	
+	
+	public Supply()
+	{
+		super();
+	}
+	
+	public Supply(int sno,String sDate,int amount, String gname, String sname,String eDate)
+	{
+		sup = new Supply();
+		sup.setSno(sno);
+		sup.setSDate(sDate);
+		sup.setAmount(amount);
+		sup.setGname(gname);
+		sup.setSname(sname);
+		sup.setEDate(eDate);
+		
+	}
 	
 	public void setSno(int sno)
 	{

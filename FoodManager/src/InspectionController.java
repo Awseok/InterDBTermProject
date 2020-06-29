@@ -75,7 +75,7 @@ public class InspectionController extends HttpServlet {
 		String eresult = request.getParameter("result");
 		
 		if(inoString != null)
-		{
+		{			
 			if(enoString == null && eresult ==null) {
 			response.sendRedirect("Inspection_modify.html");
 			return;

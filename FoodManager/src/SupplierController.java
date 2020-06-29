@@ -10,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,9 +27,7 @@ import javax.sql.DataSource;
 public class SupplierController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Context ctx;
-	private DataSource ds;
 	private Connection conn;
-	private ServletContext context; 
 	private RequestDispatcher dispatcher;
 
     /**
@@ -40,7 +39,7 @@ public class SupplierController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    private void initS()
+    public void init(ServletConfig config) throws ServletException
     {
 		try {
 			ctx = new InitialContext();
@@ -55,27 +54,47 @@ public class SupplierController extends HttpServlet {
 		}
 
     }
+    
+    public void destroy() {
+    	try {
+    		conn.close();
+    	}catch(SQLException e) {
+    		e.printStackTrace();
+    	}
+    }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		initS();
+		request.setCharacterEncoding("UTF-8");
+		String bnoString=request.getParameter("bno");
+		String sname = request.getParameter("name");
+		String cno = request.getParameter("cno");
+		
+		if(sname != null)
+		{
+			if(cno == null && bnoString ==null) {
+			response.sendRedirect("Supplier_modify.html");
+			return;
+		}
+			SupplierModify(sname,cno,Integer.parseInt(bnoString));
+	}
 		try {
 			PreparedStatement st = conn.prepareStatement("select * from Supplier");
 			ResultSet rs = st.executeQuery();
 			
-
 			ArrayList<Supplier> supList = new ArrayList<Supplier>();	
 			
 			while(rs.next())
 			{
-				int bno = rs.getInt("BUSINESS_LICENSE_NUMBER");
 				String name = rs.getString("SUPPLIER_NAME");
-				String cno = rs.getString("CONTACT_NUMBER");
+				String Cno = rs.getString("Contact_Number");
+				int Bno = rs.getInt("BUSINESS_LICENSE_NUMBER");
 				
-				Supplier Sup = new Supplier(name,cno,bno);
+				Supplier Sup = new Supplier(name,Cno,Bno);
 				
 				supList.add(Sup);
 			}
@@ -84,11 +103,15 @@ public class SupplierController extends HttpServlet {
 			dispatcher = request.getRequestDispatcher("Supplier.jsp");
 			dispatcher.forward(request, response);
 			
+			rs.close();
+			st.close();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			// TODOddl Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -98,4 +121,26 @@ public class SupplierController extends HttpServlet {
 		doGet(request, response);
 	}
 
+	
+	
+	private void SupplierModify(String name, String cno, int bno)
+	{
+		try {
+			PreparedStatement st = conn.prepareStatement(
+				"merge into Supplier s using dual on(s.Supplier_name=?) "
+						+ "when matched then update set s.Contact_Number=?,s.BUSINESS_LICENSE_NUMBER=?"
+						+ "when not matched then insert (s.Supplier_name,s.Contact_number,s.BUSINESS_LICENSE_NUMBER) values (?,?,?)");
+			st.setString(1, name);
+			st.setString(2, cno);
+			st.setInt(3,bno);
+			st.setString(4, name);
+			st.setString(5, cno);
+			st.setInt(6, bno);
+			st.executeUpdate();
+			st.close();
+			conn.commit();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    "%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>식자재 시스템</title>
+</head>
+<body>
+<h1> 식자재 시스템 </h1>
+<table>
+<tr> <th> 재료명 </th> <th> 수량 </th> </tr>
+
+<c:forEach var="foodList" items="${foodMaterial}">
+
+<c:url value="/NutritionController" var="nut_url">
+  <c:param name="gredientName" value="${foodList.nut.name}" />
+</c:url>
+
+<tr> 
+<td> <a href="${nut_url}"> <c:out value="${foodList.nut.name}"/>  </a></td>
+<td> <c:out value="${foodList.amount}" /> </td>
+<td>
+
+<c:url value="/FoodMatController" var="food_url">
+  <c:param name="gredientName" value="${foodList.nut.name}" />
+</c:url>
+
+<a href="${food_url}" > 수정 </a>
+</tr>
+</c:forEach>
+</table>
+
+<a href="gredient_modify.html"> 추가 </a>
+
+</body>
+</html>
