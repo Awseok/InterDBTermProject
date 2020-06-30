@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>조리 등록 및 수정</title>
+</head>
+<body>
+<h1> 조리 등록 및 수정</h1>
+
+<form action="http://localhost:8080/MenuManagementSystem/MenuController">
+키                : <input type="number" name="cookingKey">
+요리명      : <input type="text" name="dishName">
+조리 직원 번호 : <input type="number" name="employeeNumber">
+일시             : <input type="text" name="cookingDate">
+<input type="radio" id="modify" name="opcode" value="modifyCooking">
+<label for="modify">등록 및 수정</label>
+<input type="radio" id="delete" name="opcode" value="deleteCooking">
+<label for="delete">삭제</label>
+<input type="submit">
+</form>
+</body>
+</html>

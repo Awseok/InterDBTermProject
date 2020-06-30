@@ -1,9 +1,2 @@
-/Dish.class
-/DishController.class
-/FoodMatController.class
-/FoodMaterial.class
-/Nutrition.class
-/NutritionController.class
-/OperationCode.class
-/Recipe.class
-/ServerManager.class
+/Cooking.class
+/MenuController.class
