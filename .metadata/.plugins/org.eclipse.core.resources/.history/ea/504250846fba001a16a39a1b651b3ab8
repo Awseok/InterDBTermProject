@@ -80,8 +80,7 @@ public class MenuController extends HttpServlet {
 			deleteMember(Integer.parseInt(mnoString));
 		}
 		if(mnoString != null && form == null)
-		{		
-			System.out.println("Å×½ºÆ®26");
+		{			
 			if(cnoString == null && date ==null && dist == null) {
 			response.sendRedirect("Menu_modify.html");
 			return;
@@ -163,8 +162,6 @@ public class MenuController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	public void deleteMember(int mno) 
     { 
         try {  

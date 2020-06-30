@@ -7,7 +7,7 @@
 <body>
 <h1> 메뉴 등록 및 수정 </h1>
 
-<form action="http://localhost:8080/FoodManager/MenuController">
+<form action="http://localhost:8080/FoodManager/InspectionController">
 
 메뉴번호 : <input type="number" name="mno"> <br />
 조리번호 : <input type="number" name="cno"> <br />

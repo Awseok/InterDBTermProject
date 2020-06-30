@@ -21,9 +21,9 @@
   <c:param name="mno" value="${insList.menu.mno}" />
 </c:url>
 
-<c:url value="/MenuController" var="del_url">
+<c:url value="/InspectionController" var="del_url">
   <c:param name="form" value="delete" />
-  <c:param name="mno" value="${menuList.menu.mno}"/>
+  <c:param name="mno" value="${insList.menu.mno}"/>
 </c:url>
 
 

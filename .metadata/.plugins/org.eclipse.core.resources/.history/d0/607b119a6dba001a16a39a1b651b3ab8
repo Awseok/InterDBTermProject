@@ -76,12 +76,11 @@ public class MenuController extends HttpServlet {
 		
 		if (form != null && mnoString != null)
 		{
-			System.out.println("테스트25");
+						
 			deleteMember(Integer.parseInt(mnoString));
 		}
 		if(mnoString != null && form == null)
-		{		
-			System.out.println("테스트26");
+		{			
 			if(cnoString == null && date ==null && dist == null) {
 			response.sendRedirect("Menu_modify.html");
 			return;
@@ -97,7 +96,6 @@ public class MenuController extends HttpServlet {
 			
 			while(rs.next())
 			{
-				System.out.println("테스트2");
 				int mno = rs.getInt("MENU_KEY");
 				int cno = rs.getInt("COOKING_KEY");
 				String mdate = rs.getString("MENU_DATE");
@@ -132,54 +130,35 @@ public class MenuController extends HttpServlet {
 	
 	private void MenuModify(int mno,int cno,String date,String dist)
 	{
-		System.out.println("테스트3");
 		try {
 			PreparedStatement st = conn.prepareStatement(
-				"merge into menu m using dual on(m.MENU_KEY=?) "
-						+"when matched then update set m.COOKING_KEY=?, m.MENU_DATE=?,m.DISTRIBUTION=? "
+				"merge into menu m using dual on(m.MENU_KEY=?)"
+						+"when matched then update set m.COOKING_KEY=?, m.MENU_DATE=?,m.DISTRIBUTION"
 						+"when not matched then insert (m.MENU_KEY,m.COOKING_KEY,m.MENU_DATE,m.DISTRIBUTION) values (?,?,?,?)");
-			System.out.println("테스트4");
 			st.setInt(1, mno);
-			System.out.println("테스트5");
-			st.setInt(2, cno);
-			System.out.println("테스트6");
+			st.setInt(2,cno);
 			st.setString(3, date);
-			System.out.println("테스트7");
 			st.setString(4,dist);
-			System.out.println("테스트8");
 			st.setInt(5, mno);
-			System.out.println("테스트");
 			st.setInt(6, cno);
-			System.out.println("테스트2");
 			st.setString(7,date);
-			System.out.println("테스트3");
 			st.setString(8, dist);
-			System.out.println("테스트4");
 			st.executeUpdate();
-			System.out.println("테스트5");
 			st.close();
 			conn.commit();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	public void deleteMember(int mno) 
     { 
-        try {  
-        	System.out.println("테스트");
+        try {         
             PreparedStatement pstmt = conn.prepareStatement("select * from menu where menu_key=?");
-            System.out.println("테스트2");
             pstmt.setInt(1, mno);
-            System.out.println("테스트3");
             ResultSet rs = pstmt.executeQuery();
-            System.out.println("테스트4");
             while (rs.next()) 
-            {                        
-            	System.out.println("테스트5");
+            {                               
                     pstmt = conn.prepareStatement("delete from menu where menu_key=?");
-                    System.out.println("테스트6");
                     pstmt.setInt(1, mno);
                     ;
                     pstmt.executeUpdate();

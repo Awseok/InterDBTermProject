@@ -23,7 +23,7 @@
 
 <c:url value="/MenuController" var="del_url">
   <c:param name="form" value="delete" />
-  <c:param name="mno" value="${menuList.menu.mno}"/>
+  <c:param name="mno" value="${insList.menu.mno}"/>
 </c:url>
 
 

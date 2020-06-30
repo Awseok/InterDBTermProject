@@ -80,8 +80,7 @@ public class MenuController extends HttpServlet {
 			deleteMember(Integer.parseInt(mnoString));
 		}
 		if(mnoString != null && form == null)
-		{		
-			System.out.println("테스트26");
+		{			
 			if(cnoString == null && date ==null && dist == null) {
 			response.sendRedirect("Menu_modify.html");
 			return;
@@ -163,23 +162,15 @@ public class MenuController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	public void deleteMember(int mno) 
     { 
-        try {  
-        	System.out.println("테스트");
+        try {         
             PreparedStatement pstmt = conn.prepareStatement("select * from menu where menu_key=?");
-            System.out.println("테스트2");
             pstmt.setInt(1, mno);
-            System.out.println("테스트3");
             ResultSet rs = pstmt.executeQuery();
-            System.out.println("테스트4");
             while (rs.next()) 
-            {                        
-            	System.out.println("테스트5");
+            {                               
                     pstmt = conn.prepareStatement("delete from menu where menu_key=?");
-                    System.out.println("테스트6");
                     pstmt.setInt(1, mno);
                     ;
                     pstmt.executeUpdate();
